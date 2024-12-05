@@ -20,15 +20,19 @@ public final class ItemValues {
 
     private static final List<ItemValue<TaiAccessoryItem>> accessories = new ArrayList<>();
 
+    static final List<ItemValue<TaiAccessoryItem>> lightAccessories = new ArrayList<>();
+    static final List<ItemValue<TaiAccessoryItem>> darkAccessories = new ArrayList<>();
+    static final List<ItemValue<TaiAccessoryItem>> ingredients = new ArrayList<>();
+
     public static final ItemValue<TaiAccessoryItem> moonPendant = accessory("moon_pendant", new MoonPendant());
 
     private static ItemValue<TaiAccessoryItem> accessory(String name, TaiAccessory accessory) {
         ItemValue<TaiAccessoryItem> itemValue = new ItemValue<>(ITEMS.register(name, () -> new TaiAccessoryItem(new Item.Properties(), accessory)));
         accessories.add(itemValue);
         if (accessory.type() == AccessoryType.LIGHT) {
-            TaiCreativeTabs.addLight(itemValue);
+            lightAccessories.add(itemValue);
         } else {
-            TaiCreativeTabs.addDark(itemValue);
+            darkAccessories.add(itemValue);
         }
         return itemValue;
     }
