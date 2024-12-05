@@ -31,8 +31,8 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${mod_id}]]
-modId = "accessories"
+modId = "curios"
 type = "required"
 ordering = "AFTER"
-versionRange = "[${accessories_version},)"
+versionRange = "[${curios_version},)"
 side = "BOTH"
