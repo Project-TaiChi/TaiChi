@@ -1,28 +1,34 @@
 package org.taichi;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
-import org.taichi.accessories.TaiAttachments;
-import org.taichi.init.ModValues;
+import org.taichi.init.TaiAttachment;
+import org.taichi.init.TaiCommon;
 
-import static org.taichi.ModConstants.MOD_ID;
+import java.util.Locale;
 
-@Mod(MOD_ID)
+
+@Mod(TaiChiMod.MOD_ID)
 public class TaiChiMod {
+    public static final String MOD_ID = "tai_chi";
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public TaiChiMod(IEventBus modEventBus, ModContainer modContainer) {
-        TaiAttachments.init(modEventBus);
-        ModValues.init(modEventBus);
+        TaiCommon.init(modEventBus);
         modEventBus.addListener(this::commonSetup);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(ModValues::registerAccessories);
+        event.enqueueWork(TaiCommon::registerAccessories);
     }
 
+    //TODO:a better name
+    public static ResourceLocation loc(String name){
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name.toLowerCase(Locale.ROOT));
+    }
 }

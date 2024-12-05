@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public enum AccessoryType implements StringRepresentable {
 
-
+    NONE,
     /*
      * 暗属性
      */

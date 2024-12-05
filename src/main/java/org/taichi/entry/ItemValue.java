@@ -1,4 +1,4 @@
-package org.taichi.init;
+package org.taichi.entry;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
