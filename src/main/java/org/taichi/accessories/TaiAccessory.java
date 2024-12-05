@@ -23,6 +23,8 @@ public interface TaiAccessory extends ICurioItem {
         if (!(entity instanceof Player player)) {
             return false;
         }
-        return player.getData(TaiAttachment.PLAYER_ACCESSORY) == type();
+//        return player.getData(TaiAttachment.PLAYER_ACCESSORY) == type();
+        // TODO: 实现饰品的穿戴条件
+        return true;
     }
 }

@@ -3,6 +3,7 @@ package org.taichi.data.provider.lang;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import org.taichi.TaiChiMod;
+import org.taichi.init.TaiItem;
 
 public class ChineseLanguageProvider extends LanguageProvider {
     public ChineseLanguageProvider(PackOutput output) {
@@ -11,6 +12,6 @@ public class ChineseLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-
+        this.add(TaiItem.moonPendant.asItem(), "幕月铃坠");
     }
 }

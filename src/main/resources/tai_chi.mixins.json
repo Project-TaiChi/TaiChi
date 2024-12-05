@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "org.taichi.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "client.MixinClientLevel",
+    "client.MixinLevelRenderer",
+    "client.MixinMinecraft"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

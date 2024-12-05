@@ -26,6 +26,11 @@ public class Data {
         gen.addProvider(event.includeServer(), new TaiDataPackProvider(packOutput, lookupProvider));
         gen.addProvider(event.includeServer(), new TaiLootTableProvider(packOutput, lookupProvider));
 
+        TaiBlockTagsProvider blockTagsProvider = new TaiBlockTagsProvider(packOutput, lookupProvider, helper);
+        gen.addProvider(event.includeServer(), blockTagsProvider);
+        gen.addProvider(event.includeServer(), new TaiItemTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), helper));
+
+        gen.addProvider(event.includeServer(), new TaiCuriosProvider(packOutput, helper, lookupProvider));
 
     }
 }

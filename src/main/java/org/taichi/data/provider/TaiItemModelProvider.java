@@ -21,6 +21,8 @@ public class TaiItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
+        this.basicItem(TaiItem.moonPendant.asItem());
+
     }
 
 
