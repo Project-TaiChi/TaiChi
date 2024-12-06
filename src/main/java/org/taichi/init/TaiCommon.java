@@ -6,13 +6,13 @@ public final class TaiCommon {
 
 
     public static void init(IEventBus modbus) {
-        TaiAttachment.init(modbus);
-        TaiItem.init(modbus);
-        TaiCreativeTab.init(modbus);
+        TaiAttachments.init(modbus);
+        TaiItems.init(modbus);
+        TaiCreativeTabs.init(modbus);
     }
 
     public static void registerAccessories() {
-        TaiItem.registerAccessories();
+        TaiItems.registerAccessories();
     }
 
     private TaiCommon() {

@@ -11,7 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.taichi.TaiChiMod;
 import org.taichi.accessories.AccessoryType;
-import org.taichi.init.TaiAttachment;
+import org.taichi.init.TaiAttachments;
 
 import static net.minecraft.commands.Commands.literal;
 
@@ -34,14 +34,14 @@ public class TaiCommands {
                     .then(literal(AccessoryType.DARK.name()).executes(ctx -> {
                         Entity entity = ctx.getSource().getEntity();
                         if (entity instanceof Player player) {
-                            player.setData(TaiAttachment.PLAYER_ACCESSORY, AccessoryType.DARK);
+                            player.setData(TaiAttachments.PLAYER_ACCESSORY, AccessoryType.DARK);
                             ctx.getSource().sendSuccess(() -> Component.literal("Set player to dark accessory"), true);
                         } else ctx.getSource().sendFailure(Component.literal("You must be a player to use this command"));
                         return 0;
                     })).then(literal(AccessoryType.LIGHT.name()).executes(ctx -> {
                         Entity entity = ctx.getSource().getEntity();
                         if (entity instanceof Player player) {
-                            player.setData(TaiAttachment.PLAYER_ACCESSORY, AccessoryType.LIGHT);
+                            player.setData(TaiAttachments.PLAYER_ACCESSORY, AccessoryType.LIGHT);
                             ctx.getSource().sendSuccess(() -> Component.literal("Set player to light accessory"), true);
                         } else ctx.getSource().sendFailure(Component.literal("You must be a player to use this command"));
                         return 0;

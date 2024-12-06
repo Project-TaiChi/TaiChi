@@ -7,10 +7,7 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.taichi.TaiChiMod;
-import org.taichi.init.TaiBlock;
-import org.taichi.init.TaiItem;
-
-import java.util.stream.Collectors;
+import org.taichi.init.TaiItems;
 
 public class TaiItemModelProvider extends ItemModelProvider {
 
@@ -21,21 +18,21 @@ public class TaiItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
-        this.basicItem(TaiItem.moonPendant.asItem());
+        this.basicItem(TaiItems.moonPendant.asItem());
 
     }
 
 
     private static Iterable<Item> getCommonItems() {
-        return Iterables.transform(TaiItem.commonEntries.getEntries(), DeferredHolder::get);
+        return Iterables.transform(TaiItems.commonEntries.getEntries(), DeferredHolder::get);
     }
     private static Iterable<Item> getLightItems() {
-        return Iterables.transform(TaiItem.lightEntries.getEntries(), DeferredHolder::get);
+        return Iterables.transform(TaiItems.lightEntries.getEntries(), DeferredHolder::get);
     }
     private static Iterable<Item> getDarkItems() {
-        return Iterables.transform(TaiItem.darkEntries.getEntries(), DeferredHolder::get);
+        return Iterables.transform(TaiItems.darkEntries.getEntries(), DeferredHolder::get);
     }
     private static Iterable<Item> getIngredientItems() {
-        return Iterables.transform(TaiItem.ingredientEntries.getEntries(), DeferredHolder::get);
+        return Iterables.transform(TaiItems.ingredientEntries.getEntries(), DeferredHolder::get);
     }
 }

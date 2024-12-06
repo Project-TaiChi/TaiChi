@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.taichi.TaiChiMod;
 import org.taichi.utils.Keys;
 
-public final class TaiCreativeTab {
+public final class TaiCreativeTabs {
 
     private static final DeferredRegister<CreativeModeTab> CREATIVE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TaiChiMod.MOD_ID);
 
@@ -18,9 +18,9 @@ public final class TaiCreativeTab {
             "light_tab",
             () -> CreativeModeTab.builder()
                     .title(Keys.translatable("tab_light"))
-                    .icon(TaiItem.moonPendant.asItem()::getDefaultInstance)
+                    .icon(TaiItems.moonPendant.asItem()::getDefaultInstance)
                     .displayItems((parameters, output) -> {
-                        for (var creativeTagItem : TaiItem.lightEntries.getEntries()) {
+                        for (var creativeTagItem : TaiItems.lightEntries.getEntries()) {
                             output.accept(creativeTagItem.get());
                         }
                     })
@@ -33,7 +33,7 @@ public final class TaiCreativeTab {
                     .title(Keys.translatable("tab_dark"))
                     .icon(Items.BARRIER::getDefaultInstance)
                     .displayItems((parameters, output) -> {
-                        for (var creativeTagItem : TaiItem.darkEntries.getEntries()) {
+                        for (var creativeTagItem : TaiItems.darkEntries.getEntries()) {
                             output.accept(creativeTagItem.get());
                         }
                     })
@@ -46,7 +46,7 @@ public final class TaiCreativeTab {
                     .title(Keys.translatable("tab_ingredient"))
                     .icon(Items.BARRIER::getDefaultInstance)
                     .displayItems((parameters, output) -> {
-                        for (var creativeTagItem : TaiItem.ingredientEntries.getEntries()) {
+                        for (var creativeTagItem : TaiItems.ingredientEntries.getEntries()) {
                             output.accept(creativeTagItem.get());
                         }
                     })

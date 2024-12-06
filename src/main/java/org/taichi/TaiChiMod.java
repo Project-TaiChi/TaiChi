@@ -7,7 +7,6 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
-import org.taichi.init.TaiAttachment;
 import org.taichi.init.TaiCommon;
 
 import java.util.Locale;

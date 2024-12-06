@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.taichi.TaiChiMod;
 import org.taichi.init.CuriosTags;
-import org.taichi.init.TaiItem;
+import org.taichi.init.TaiItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -20,6 +20,6 @@ public class TaiItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
 
         this.tag(CuriosTags.NECKLACE)
-                .add(TaiItem.moonPendant.asItem());
+                .add(TaiItems.moonPendant.asItem());
     }
 }

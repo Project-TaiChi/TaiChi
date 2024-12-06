@@ -13,7 +13,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.function.Supplier;
 
-public final class TaiItem {
+public final class TaiItems {
 
     public static final DeferredRegister.Items commonEntries = DeferredRegister.createItems(TaiChiMod.MOD_ID);
     public static final DeferredRegister.Items lightEntries = DeferredRegister.createItems(TaiChiMod.MOD_ID);

@@ -1,8 +1,11 @@
 package org.taichi.accessories;
 
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public abstract class BasicTaiAccessory implements TaiAccessory {
 
@@ -39,5 +42,10 @@ public abstract class BasicTaiAccessory implements TaiAccessory {
     }
 
     protected void tickInternal(ItemStack stack, SlotContext context, Player player) {
+    }
+
+    @Override
+    public @NotNull ICurio.DropRule getDropRule(SlotContext slotContext, DamageSource source, int lootingLevel, boolean recentlyHit, ItemStack stack) {
+        return ICurio.DropRule.ALWAYS_KEEP;
     }
 }
