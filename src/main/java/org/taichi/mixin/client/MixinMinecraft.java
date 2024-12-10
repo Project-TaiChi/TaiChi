@@ -3,13 +3,11 @@ package org.taichi.mixin.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.taichi.client.MoonPendantBehaviorHandler;
+import org.taichi.client.AttackReactionBehaviorHandler;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft {
@@ -20,7 +18,7 @@ public abstract class MixinMinecraft {
             return;
         }
 
-        if(!MoonPendantBehaviorHandler.isGlowing(livingEntity)) {
+        if(!AttackReactionBehaviorHandler.isGlowing(livingEntity)) {
             return;
         }
 

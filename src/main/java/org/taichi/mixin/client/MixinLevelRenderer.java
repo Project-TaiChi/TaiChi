@@ -6,7 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.taichi.client.MoonPendantBehaviorHandler;
+import org.taichi.client.AttackReactionBehaviorHandler;
 
 @Mixin(LevelRenderer.class)
 public abstract class MixinLevelRenderer {
@@ -17,7 +17,7 @@ public abstract class MixinLevelRenderer {
             return entity.getTeamColor();
         }
 
-        if(!MoonPendantBehaviorHandler.isGlowing(livingEntity)) {
+        if(!AttackReactionBehaviorHandler.isGlowing(livingEntity)) {
             return entity.getTeamColor();
         }
 

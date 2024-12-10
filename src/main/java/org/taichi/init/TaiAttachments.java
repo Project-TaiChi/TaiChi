@@ -7,6 +7,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.taichi.TaiChiMod;
 import org.taichi.accessories.AccessoryType;
+import org.taichi.attachments.EntityCurioEffectAttachment;
 
 import java.util.function.Supplier;
 
@@ -35,6 +36,14 @@ public final class TaiAttachments {
             () -> AttachmentType.builder(() -> 0)
                     .serialize(Codec.INT)
                     .copyOnDeath()
+                    .build()
+    );
+
+
+
+    public static final Supplier<AttachmentType<EntityCurioEffectAttachment>> ENTITY_EFFECT = ATTACHMENTS.register(
+            "entity_effect",
+            () -> AttachmentType.builder(EntityCurioEffectAttachment::new)
                     .build()
     );
 

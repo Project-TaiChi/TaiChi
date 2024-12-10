@@ -9,11 +9,10 @@ public final class TaiCommon {
         TaiAttachments.init(modbus);
         TaiItems.init(modbus);
         TaiCreativeTabs.init(modbus);
+        TaiCapabilities.init(modbus);
+        TaiCurioEffects.init(modbus);
     }
 
-    public static void registerAccessories() {
-        TaiItems.registerAccessories();
-    }
 
     private TaiCommon() {
 

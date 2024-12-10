@@ -23,7 +23,7 @@ public class TaiChiMod {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(TaiCommon::registerAccessories);
+
     }
 
     //TODO:a better name

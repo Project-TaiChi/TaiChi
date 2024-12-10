@@ -18,21 +18,12 @@ public class TaiItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
-        this.basicItem(TaiItems.moonPendant.asItem());
+        for(ItemDataContext.ItemData itemData : ItemDataContext.ITEM_DATAS) {
+            Item item = itemData.itemSupplier().get();
+            this.basicItem(item);
+        }
 
     }
 
 
-    private static Iterable<Item> getCommonItems() {
-        return Iterables.transform(TaiItems.commonEntries.getEntries(), DeferredHolder::get);
-    }
-    private static Iterable<Item> getLightItems() {
-        return Iterables.transform(TaiItems.lightEntries.getEntries(), DeferredHolder::get);
-    }
-    private static Iterable<Item> getDarkItems() {
-        return Iterables.transform(TaiItems.darkEntries.getEntries(), DeferredHolder::get);
-    }
-    private static Iterable<Item> getIngredientItems() {
-        return Iterables.transform(TaiItems.ingredientEntries.getEntries(), DeferredHolder::get);
-    }
 }

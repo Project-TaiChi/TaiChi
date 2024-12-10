@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
-public class MoonPendantBehaviorHandler {
+public class AttackReactionBehaviorHandler {
 
     private static boolean _enabled = false;
 
@@ -17,10 +17,10 @@ public class MoonPendantBehaviorHandler {
     }
 
     public static void setEnabled(boolean enabled) {
-        MoonPendantBehaviorHandler._enabled = enabled;
+        AttackReactionBehaviorHandler._enabled = enabled;
     }
 
-    private static HashSet<UUID> _glowingEntities = new HashSet<>();
+    private static final HashSet<UUID> _glowingEntities = new HashSet<>();
 
 
     public static boolean isGlowing(LivingEntity entity) {

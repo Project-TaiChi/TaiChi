@@ -6,7 +6,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.HandlerThread;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.taichi.TaiChiMod;
-import org.taichi.network.s2c.MoonPendantBehaviorSync;
+import org.taichi.network.s2c.AttackReactionSync;
 
 @EventBusSubscriber(modid = TaiChiMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class TaiNetworks {
@@ -17,9 +17,9 @@ public class TaiNetworks {
                 .executesOn(HandlerThread.MAIN);
 
         registrar.playToClient(
-                MoonPendantBehaviorSync.TYPE,
-                MoonPendantBehaviorSync.STREAM_CODEC,
-                MoonPendantBehaviorSync::handle
+                AttackReactionSync.TYPE,
+                AttackReactionSync.STREAM_CODEC,
+                AttackReactionSync::handle
         );
     }
 }
