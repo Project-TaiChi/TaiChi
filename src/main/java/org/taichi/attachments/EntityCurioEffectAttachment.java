@@ -9,6 +9,7 @@ import org.taichi.curios.TaiCurioEffectType;
 import org.taichi.init.TaiCurioEffects;
 import top.theillusivec4.curios.api.SlotContext;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -37,10 +38,12 @@ public class EntityCurioEffectAttachment {
     }
 
 
-    public <T extends TaiCurioEffectContext> void addEffect(TaiCurioEffectType<T> effect, SlotContext slotContext, ItemStack stack, Consumer<T> modifier) {
+    public <T extends TaiCurioEffectContext> void addEffect(TaiCurioEffectType<T> effect, SlotContext slotContext, ItemStack stack, @Nullable Consumer<T> modifier) {
 
         T context = effect.create(stack, slotContext);
-        modifier.accept(context);
+        if (modifier != null) {
+            modifier.accept(context);
+        }
         String key = Util.getRegisteredName(TaiCurioEffects.REGISTRY_CURIOS_EFFECT, effect);
 
 

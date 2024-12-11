@@ -1,10 +1,14 @@
 package org.taichi.client;
 
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import org.taichi.curios.type.SimpleEffect;
 import org.taichi.init.TaiCurioEffects;
 
 import java.util.HashSet;
 
+@EventBusSubscriber
 public class SimpleEffectHandler {
 
     private static boolean hasMoonNightVersion = false;
@@ -25,5 +29,11 @@ public class SimpleEffectHandler {
         if(effect == TaiCurioEffects.MOON_LIGHT_VISION.get()) {
             hasMoonNightVersion = isAdd;
         }
+    }
+
+    @SubscribeEvent
+    public static void onClientConnected(ClientPlayerNetworkEvent.LoggingOut event) {
+        hasMoonNightVersion = false;
+        effects.clear();
     }
 }
