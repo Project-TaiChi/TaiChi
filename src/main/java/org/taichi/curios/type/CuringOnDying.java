@@ -12,6 +12,7 @@ import org.taichi.curios.TaiCurioEffectContext;
 import org.taichi.curios.TaiCurioEffectType;
 import org.taichi.init.TaiCapabilities;
 import org.taichi.init.TaiCurioEffects;
+import org.taichi.utils.CapabilityHelper;
 import org.taichi.utils.CuriosHelper;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -24,11 +25,7 @@ public class CuringOnDying extends TaiCurioEffectType<TaiCurioEffectContext> {
 
 
     private boolean tryCurePlayer(Player player) {
-        TaiCurioEffectHandler effect = player.getCapability(TaiCapabilities.TAI_CURIO_EFFECT_HANDLER);
-        if (effect == null)
-            return false;
-
-        TaiCurioEffectContext effectContext = effect.findFirstEffect(TaiCurioEffects.CURING_ON_DYING.get());
+        TaiCurioEffectContext effectContext = CapabilityHelper.findEntityEffectContext(player, TaiCurioEffects.CURING_ON_DYING.get());
         if (effectContext == null) return false;
 
         player.setHealth(player.getMaxHealth());

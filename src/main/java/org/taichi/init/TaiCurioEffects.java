@@ -11,6 +11,7 @@ import org.taichi.TaiChiMod;
 import org.taichi.curios.TaiCurioEffectType;
 import org.taichi.curios.type.AttackerReaction;
 import org.taichi.curios.type.CuringOnDying;
+import org.taichi.curios.type.DamageImmuneEffect;
 import org.taichi.curios.type.SimpleEffect;
 
 public class TaiCurioEffects {
@@ -30,7 +31,7 @@ public class TaiCurioEffects {
 
     public static DeferredHolder<TaiCurioEffectType<?>, SimpleEffect> MOON_LIGHT_VISION = CURIOS_EFFECTS.register("moon_light_vision", () -> new SimpleEffect(false, false, true));
 
-//    public static DeferredHolder<T>
+    public static DeferredHolder<TaiCurioEffectType<?>, DamageImmuneEffect> DAMAGE_IMMUNE = CURIOS_EFFECTS.register("damage_immune", DamageImmuneEffect::new);
 
 
     public static void init(IEventBus modbus) {

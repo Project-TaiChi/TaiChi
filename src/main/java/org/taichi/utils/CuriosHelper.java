@@ -11,11 +11,11 @@ import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
 public final class CuriosHelper {
 
-    public static void removeAccessoryFromPlayer(Player player, Item item) {
-        removeAccessoryFromPlayer(player, item, false);
+    public static void removeCurioFromPlayer(Player player, Item item) {
+        removeCurioFromPlayer(player, item, false);
     }
 
-    public static void removeAccessoryFromPlayer(Player player, Item item, boolean all) {
+    public static void removeCurioFromPlayer(Player player, Item item, boolean all) {
         CuriosApi.getCuriosInventory(player).ifPresent(inventory -> {
             if (all) {
                 for (SlotResult slot : inventory.findCurios(item)) {
