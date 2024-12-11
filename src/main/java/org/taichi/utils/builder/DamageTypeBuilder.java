@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
-import org.taichi.curios.effects.DamageImmuneEffectContext;
+import org.taichi.curios.effects.DamageAwareEffectContext;
 
 import java.util.List;
 
@@ -31,12 +31,12 @@ public class DamageTypeBuilder {
         return this;
     }
 
-    public void addToContext(DamageImmuneEffectContext context) {
+    public void addToContext(DamageAwareEffectContext context) {
         if (!tags.isEmpty()) {
-            context.setImmuneDamageTags(tags);
+            context.setDamageTags(tags);
         }
         if (!keys.isEmpty()) {
-            context.setImmuneDamageTypes(keys);
+            context.setDamageTypes(keys);
         }
     }
 

@@ -1,11 +1,13 @@
 package org.taichi.network;
 
+import net.minecraft.network.codec.StreamCodec;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.HandlerThread;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.taichi.TaiChiMod;
+import org.taichi.network.c2s.DoubleJumpPropertySync;
 import org.taichi.network.s2c.AttackReactionSync;
 import org.taichi.network.s2c.SimpleEffectSync;
 
@@ -27,6 +29,14 @@ public class TaiNetworks {
                 SimpleEffectSync.TYPE,
                 SimpleEffectSync.STREAM_CODEC,
                 SimpleEffectSync::handle
+        );
+
+
+
+        registrar.playToServer(
+                DoubleJumpPropertySync.TYPE,
+                DoubleJumpPropertySync.STREAM_CODEC,
+                DoubleJumpPropertySync::handle
         );
     }
 }

@@ -7,6 +7,7 @@ public final class TaiCommon {
 
     public static void init(IEventBus modbus) {
         TaiAttachments.init(modbus);
+        TaiAttributes.init(modbus);
         TaiItems.init(modbus);
         TaiCreativeTabs.init(modbus);
         TaiCapabilities.init(modbus);

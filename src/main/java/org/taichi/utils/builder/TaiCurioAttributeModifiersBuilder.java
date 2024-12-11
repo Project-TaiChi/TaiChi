@@ -12,9 +12,9 @@ public class TaiCurioAttributeModifiersBuilder {
     private final String slot;
 
 
-    public TaiCurioAttributeModifiersBuilder(String namePrefix, String slot) {
+    public TaiCurioAttributeModifiersBuilder(String namePrefix, CurioAttributeModifiers.Builder builder, String slot) {
         this.namePrefix = namePrefix;
-        this.builder = CurioAttributeModifiers.builder();
+        this.builder = builder;
         this.slot = slot;
     }
 

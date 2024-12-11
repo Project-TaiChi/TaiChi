@@ -3,10 +3,8 @@ package org.taichi.init;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.checkerframework.checker.units.qual.A;
 import org.taichi.TaiChiMod;
 import org.taichi.item.TaiBaseItem;
 import org.taichi.utils.builder.DamageTypeBuilder;
@@ -46,12 +44,55 @@ public final class TaiItems {
     public static final DeferredItem<TaiBaseItem> RUNE_STONE = TaiItemBuilder.create("rune_stone")
             .textChinese("铭印符石")
             .tag(CuriosTags.CURIO)
-            // TODO: 魔法伤害
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
+            .attributes("curio", builder -> builder
+                    .add(TaiAttributes.MAGIC_ATTACK_DAMAGE_RATIO, "max_health", 0.15))
+            .register();
+
+    public static final DeferredItem<TaiBaseItem> ALLAY_SPECIMEN = TaiItemBuilder.create("allay_specimen")
+            .textChinese("静籁悦灵")
+            .tag(CuriosTags.CURIO)
+            .curio(builder -> builder
+                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, DamageTypeBuilder.create().type(DamageTypes.FREEZE)::addToContext))
+            .properties(properties -> properties.stacksTo(1))
+            .tab(TaiTab.Ingredients)
+            .attributes("curio", builder -> builder
+                    .multiply(Attributes.MOVEMENT_SPEED, "max_health", 0.1)
+                    .add(Attributes.LUCK, "luck", 1.0))
             .register();
 
 
+    public static final DeferredItem<TaiBaseItem> GRAVE_PIECE = TaiItemBuilder.create("grave_piece")
+            .textChinese("盗掘墓片")
+            .tag(CuriosTags.CURIO)
+            .curio(builder -> builder
+                    .withEffect(TaiCurioEffects.BREAK_ON_DAMAGE, DamageTypeBuilder.create().type(DamageTypes.FALL)::addToContext)
+                    .withEffect(TaiCurioEffects.MUTE_SOUND))
+            .properties(properties -> properties.stacksTo(1))
+            .tab(TaiTab.Ingredients)
+            .attributes("curio", builder -> builder
+                    .add(Attributes.ARMOR_TOUGHNESS, "armor_toughness", 6.0))
+            .register();
+
+    // 星界晶块
+    public static final DeferredItem<TaiBaseItem> STAR_CRYSTAL = TaiItemBuilder.create("star_crystal")
+            .textChinese("星界晶块")
+            .tag(CuriosTags.CURIO)
+            .curio(builder -> builder
+                    // TODO: change this into tags
+                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, DamageTypeBuilder.create()
+                            .type(DamageTypes.FALL)
+                            .type(DamageTypes.FLY_INTO_WALL)
+                            .type(DamageTypes.FALLING_ANVIL)
+                            .type(DamageTypes.FALLING_STALACTITE)
+                            ::addToContext)
+                    .withEffect(TaiCurioEffects.DOUBLE_JUMP))
+            .properties(properties -> properties.stacksTo(1))
+            .tab(TaiTab.Ingredients)
+            .attributes("curio", builder -> builder
+                    .add(Attributes.MOVEMENT_SPEED, "movement_speed", 0.1))
+            .register();
 
     public static void init(IEventBus modbus) {
         ITEMS.register(modbus);

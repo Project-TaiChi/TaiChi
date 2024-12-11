@@ -46,15 +46,12 @@ public class EntityCurioEffectAttachment {
         }
         String key = Util.getRegisteredName(TaiCurioEffects.REGISTRY_CURIOS_EFFECT, effect);
 
-
-        effects.put(key, context);
-
-
         if (effect.unique() && effects.containsKey(key)) {
             context.setActivated(false);
             return;
         }
 
+        effects.put(key, context);
         effect.effectAdded(slotContext.entity(), stack, context);
     }
 

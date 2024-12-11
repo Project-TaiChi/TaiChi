@@ -1,6 +1,5 @@
 package org.taichi.curios.effects;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
@@ -12,23 +11,23 @@ import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.List;
 
-public class DamageImmuneEffectContext extends TaiCurioEffectContext {
+public class DamageAwareEffectContext extends TaiCurioEffectContext {
     private List<TagKey<DamageType>> immuneDamageTags;
     private List<ResourceKey<DamageType>> immuneDamageTypes;
 
-    public DamageImmuneEffectContext(TaiCurioEffectType<?> type, ItemStack stack, SlotContext curioContext) {
+    public DamageAwareEffectContext(TaiCurioEffectType<?> type, ItemStack stack, SlotContext curioContext) {
         super(type, stack, curioContext);
 
     }
 
-    public void setImmuneDamageTags(List<TagKey<DamageType>> immuneDamageTags) {
+    public void setDamageTags(List<TagKey<DamageType>> immuneDamageTags) {
         this.immuneDamageTags = immuneDamageTags;
     }
-    public void setImmuneDamageTypes(List<ResourceKey<DamageType>> immuneDamageTypes) {
+    public void setDamageTypes(List<ResourceKey<DamageType>> immuneDamageTypes) {
         this.immuneDamageTypes = immuneDamageTypes;
     }
 
-    public boolean isImmuneTo(DamageSource damageSource) {
+    public boolean test(DamageSource damageSource) {
         if (immuneDamageTypes != null) {
             for (ResourceKey<DamageType> key : immuneDamageTypes) {
                 if(damageSource.is(key)) {
