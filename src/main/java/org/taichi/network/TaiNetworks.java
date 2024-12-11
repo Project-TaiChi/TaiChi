@@ -7,6 +7,7 @@ import net.neoforged.neoforge.network.registration.HandlerThread;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.taichi.TaiChiMod;
 import org.taichi.network.s2c.AttackReactionSync;
+import org.taichi.network.s2c.SimpleEffectSync;
 
 @EventBusSubscriber(modid = TaiChiMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class TaiNetworks {
@@ -20,6 +21,12 @@ public class TaiNetworks {
                 AttackReactionSync.TYPE,
                 AttackReactionSync.STREAM_CODEC,
                 AttackReactionSync::handle
+        );
+
+        registrar.playToClient(
+                SimpleEffectSync.TYPE,
+                SimpleEffectSync.STREAM_CODEC,
+                SimpleEffectSync::handle
         );
     }
 }

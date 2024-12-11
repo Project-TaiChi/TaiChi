@@ -16,12 +16,8 @@ public record AttackReactionSync(
         boolean enabled,
         List<UUID> glowingEntities
 )  implements CustomPacketPayload{
-    public static final CustomPacketPayload.Type<AttackReactionSync> TYPE = new CustomPacketPayload.Type<>(TaiChiMod.loc("moon_pendant_behavior_sync"));
+    public static final CustomPacketPayload.Type<AttackReactionSync> TYPE = new CustomPacketPayload.Type<>(TaiChiMod.loc("attack_reaction_sync"));
 
-    // Each pair of elements defines the stream codec of the element to encode/decode and the getter for the element to encode
-    // 'name' will be encoded and decoded as a string
-    // 'age' will be encoded and decoded as an integer
-    // The final parameter takes in the previous parameters in the order they are provided to construct the payload object
     public static final StreamCodec<ByteBuf, AttackReactionSync> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.BOOL,
             AttackReactionSync::enabled,

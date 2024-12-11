@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.taichi.client.AttackReactionBehaviorHandler;
+import org.taichi.client.SimpleEffectHandler;
 
 import java.util.function.Supplier;
 
@@ -25,7 +26,7 @@ public abstract class MixinClientLevel extends Level {
 
     @Inject(method = "getSkyDarken", at = @At("RETURN"), cancellable = true)
     public void getSkyDarken(float partialTick, CallbackInfoReturnable<Float> cir) {
-        if (AttackReactionBehaviorHandler.enabled()) {
+        if (SimpleEffectHandler.hasMoonNightVersion()) {
             // by default, the sky darken on day is 1, on raining day is 0.75, we set a value sightly darker than raining day
             cir.setReturnValue(Math.max(cir.getReturnValue(), 0.7f));
         }

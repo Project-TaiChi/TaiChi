@@ -17,6 +17,7 @@ public final class TaiItems {
             .tag(CuriosTags.CURIO)
             .curio(builder -> builder
                     .withEffect(TaiCurioEffects.ATTACKER_REACTION)
+                    .withEffect(TaiCurioEffects.MOON_LIGHT_VISION)
                     .withEffect(TaiCurioEffects.CURING_ON_DYING))
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Curios)

@@ -1,20 +1,23 @@
-package org.taichi.curios.effects;
+package org.taichi.curios.type;
 
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.EffectCures;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import org.taichi.capability.TaiCurioEffectHandler;
-import org.taichi.curios.ICuriosEffect;
+import org.taichi.curios.TaiCurioEffectContext;
+import org.taichi.curios.TaiCurioEffectType;
 import org.taichi.init.TaiCapabilities;
 import org.taichi.init.TaiCurioEffects;
 import org.taichi.utils.CuriosHelper;
-import org.taichi.utils.EquippedCurio;
+import top.theillusivec4.curios.api.SlotContext;
 
-public class CuringOnDying implements ICuriosEffect {
+public class CuringOnDying extends TaiCurioEffectType<TaiCurioEffectContext> {
     public CuringOnDying() {
+        super(false, false);
         NeoForge.EVENT_BUS.addListener(this::onPlayerDamage);
         NeoForge.EVENT_BUS.addListener(this::onPlayerDeath);
     }
@@ -24,13 +27,14 @@ public class CuringOnDying implements ICuriosEffect {
         TaiCurioEffectHandler effect = player.getCapability(TaiCapabilities.TAI_CURIO_EFFECT_HANDLER);
         if (effect == null)
             return false;
-        if (!effect.hasEffect(TaiCurioEffects.CURING_ON_DYING.get()))
-            return false;
+
+        TaiCurioEffectContext effectContext = effect.findFirstEffect(TaiCurioEffects.CURING_ON_DYING.get());
+        if (effectContext == null) return false;
+
         player.setHealth(player.getMaxHealth());
         player.removeEffectsCuredBy(EffectCures.PROTECTED_BY_TOTEM);
 
-        EquippedCurio effectProvider = effect.findEffectProvider(TaiCurioEffects.CURING_ON_DYING.get());
-        CuriosHelper.removeCurioFromPlayer(player, effectProvider);
+        CuriosHelper.removeCurioFromPlayer(player, effectContext.getSlotContext(), effectContext.getStack());
         return true;
     }
 
@@ -55,17 +59,7 @@ public class CuringOnDying implements ICuriosEffect {
     }
 
     @Override
-    public boolean sync() {
-        return false;
-    }
-
-    @Override
-    public boolean persist() {
-        return false;
-    }
-
-    @Override
-    public boolean syncSelf() {
-        return false;
+    public TaiCurioEffectContext create(ItemStack stack, SlotContext curioContext) {
+        return new TaiCurioEffectContext(TaiCurioEffects.CURING_ON_DYING.get(), stack, curioContext);
     }
 }

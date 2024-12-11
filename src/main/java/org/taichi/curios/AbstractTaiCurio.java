@@ -8,13 +8,18 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class AbstractTaiCurio implements ICurio {
 
-    private final ItemStack stack;
-    private final List<ICuriosEffect> effects;
+    public record EffectFactory<T extends TaiCurioEffectContext>(TaiCurioEffectType<T> effect, Consumer<T> consumer) {
+    }
 
-    public AbstractTaiCurio(ItemStack stack, List<ICuriosEffect> effects) {
+    private final ItemStack stack;
+    private final List<EffectFactory<?>> effects;
+
+    public AbstractTaiCurio(ItemStack stack, List<EffectFactory<?>> effects) {
         this.stack = stack;
         this.effects = effects;
     }
@@ -26,14 +31,15 @@ public class AbstractTaiCurio implements ICurio {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onEquip(SlotContext slotContext, ItemStack prevStack) {
 
         if (!(slotContext.entity() instanceof ServerPlayer player)) {
             return;
         }
         EntityCurioEffectAttachment data = player.getData(TaiAttachments.ENTITY_EFFECT);
-        for (ICuriosEffect effect : effects) {
-            data.addEffect(effect, slotContext, stack);
+        for (EffectFactory effect : effects) {
+            data.addEffect(effect.effect(), slotContext, stack, effect.consumer());
         }
     }
 
@@ -43,8 +49,8 @@ public class AbstractTaiCurio implements ICurio {
             return;
         }
         EntityCurioEffectAttachment data = player.getData(TaiAttachments.ENTITY_EFFECT);
-        for (ICuriosEffect effect : effects) {
-            data.removeEffect(effect, slotContext, stack);
+        for (EffectFactory<?> effect : effects) {
+            data.removeEffect(effect.effect(), slotContext, stack);
         }
     }
 }
