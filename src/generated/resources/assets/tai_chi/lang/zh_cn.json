@@ -4,5 +4,17 @@
   "item.tai_chi.grave_piece": "盗掘墓片",
   "item.tai_chi.moon_pendant": "幕月铃坠",
   "item.tai_chi.rune_stone": "铭印符石",
-  "item.tai_chi.star_crystal": "星界晶块"
+  "item.tai_chi.star_crystal": "星界晶块",
+  "tai_chi.attribute.name.magic_attack_damage_ratio": "魔法伤害",
+  "tai_chi.curio_effects.attacker_reaction": "在夜晚高亮周围对你拥有敌意的生物",
+  "tai_chi.curio_effects.break_on_damage": "在受到%s时碎裂",
+  "tai_chi.curio_effects.curing_on_dying": "当生命低于10%吊坠将碎裂并为佩戴者恢复所有生命值",
+  "tai_chi.curio_effects.damage_immune": "免疫%s",
+  "tai_chi.curio_effects.double_jump": "为佩戴者提供二段跳效果",
+  "tai_chi.curio_effects.moon_light_vision": "在夜晚拥有更好的视野",
+  "tai_chi.curio_effects.mute_sound": "完全吸收佩戴者造成的所有声音",
+  "tai_chi.curio_modifier.fall": "摔落伤害",
+  "tai_chi.curio_modifier.fall_and_vector": "摔落、矢量伤害",
+  "tai_chi.curio_modifier.freeze": "冻结伤害",
+  "tai_chi.curio_modifier.lighting": "雷击伤害"
 }

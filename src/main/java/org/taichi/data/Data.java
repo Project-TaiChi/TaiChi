@@ -32,5 +32,7 @@ public class Data {
 
         gen.addProvider(event.includeServer(), new TaiCuriosProvider(packOutput, helper, lookupProvider));
 
+        gen.addProvider(event.includeServer(), new TaiDamageTypeTagsProvider(packOutput, lookupProvider, helper));
+
     }
 }

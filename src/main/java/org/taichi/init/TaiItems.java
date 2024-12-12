@@ -6,8 +6,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.taichi.TaiChiMod;
+import org.taichi.curios.EffectModifiers;
 import org.taichi.item.TaiBaseItem;
-import org.taichi.utils.builder.DamageTypeBuilder;
 import org.taichi.utils.builder.TaiItemBuilder;
 
 public final class TaiItems {
@@ -16,7 +16,7 @@ public final class TaiItems {
 
     public static final DeferredItem<TaiBaseItem> MOON_PENDANT = TaiItemBuilder.create("moon_pendant")
             .textChinese("幕月铃坠")
-            .tag(CuriosTags.CHARM)
+            .tag(TaiTags.CuriosTags.CHARM)
             .curio(builder -> builder
                     .withEffect(TaiCurioEffects.ATTACKER_REACTION)
                     .withEffect(TaiCurioEffects.MOON_LIGHT_VISION)
@@ -30,9 +30,11 @@ public final class TaiItems {
 
     public static final DeferredItem<TaiBaseItem> GHOST_FILE = TaiItemBuilder.create("ghost_fire")
             .textChinese("祟灵厄火")
-            .tag(CuriosTags.CURIO)
+            .tag(TaiTags.CuriosTags.CURIO)
             .curio(builder -> builder
-                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, DamageTypeBuilder.create().type(DamageTypes.LIGHTNING_BOLT)::addToContext))
+                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, EffectModifiers.damageType().type(DamageTypes.LIGHTNING_BOLT).translationName("lighting"))
+
+            )
 
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
@@ -43,7 +45,7 @@ public final class TaiItems {
 
     public static final DeferredItem<TaiBaseItem> RUNE_STONE = TaiItemBuilder.create("rune_stone")
             .textChinese("铭印符石")
-            .tag(CuriosTags.CURIO)
+            .tag(TaiTags.CuriosTags.CURIO)
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
             .attributes("curio", builder -> builder
@@ -52,9 +54,9 @@ public final class TaiItems {
 
     public static final DeferredItem<TaiBaseItem> ALLAY_SPECIMEN = TaiItemBuilder.create("allay_specimen")
             .textChinese("静籁悦灵")
-            .tag(CuriosTags.CURIO)
+            .tag(TaiTags.CuriosTags.CURIO)
             .curio(builder -> builder
-                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, DamageTypeBuilder.create().type(DamageTypes.FREEZE)::addToContext))
+                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, EffectModifiers.damageType().type(DamageTypes.FREEZE).translationName("freeze")))
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
             .attributes("curio", builder -> builder
@@ -65,9 +67,9 @@ public final class TaiItems {
 
     public static final DeferredItem<TaiBaseItem> GRAVE_PIECE = TaiItemBuilder.create("grave_piece")
             .textChinese("盗掘墓片")
-            .tag(CuriosTags.CURIO)
+            .tag(TaiTags.CuriosTags.CURIO)
             .curio(builder -> builder
-                    .withEffect(TaiCurioEffects.BREAK_ON_DAMAGE, DamageTypeBuilder.create().type(DamageTypes.FALL)::addToContext)
+                    .withEffect(TaiCurioEffects.BREAK_ON_DAMAGE, EffectModifiers.damageType().type(DamageTypes.FALL).translationName("fall"))
                     .withEffect(TaiCurioEffects.MUTE_SOUND))
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
@@ -78,20 +80,15 @@ public final class TaiItems {
     // 星界晶块
     public static final DeferredItem<TaiBaseItem> STAR_CRYSTAL = TaiItemBuilder.create("star_crystal")
             .textChinese("星界晶块")
-            .tag(CuriosTags.CURIO)
+            .tag(TaiTags.CuriosTags.CURIO)
             .curio(builder -> builder
-                    // TODO: change this into tags
-                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, DamageTypeBuilder.create()
-                            .type(DamageTypes.FALL)
-                            .type(DamageTypes.FLY_INTO_WALL)
-                            .type(DamageTypes.FALLING_ANVIL)
-                            .type(DamageTypes.FALLING_STALACTITE)
-                            ::addToContext)
+                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, EffectModifiers.damageType().tag(TaiTags.DamageTypes.IS_VECTOR).translationName("fall_and_vector"))
                     .withEffect(TaiCurioEffects.DOUBLE_JUMP))
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
             .attributes("curio", builder -> builder
-                    .add(Attributes.MOVEMENT_SPEED, "movement_speed", 0.1))
+                    // movement speed has ratio of 1000, so 0.01 is 10%
+                    .add(Attributes.MOVEMENT_SPEED, "movement_speed", 0.01))
             .register();
 
     public static void init(IEventBus modbus) {

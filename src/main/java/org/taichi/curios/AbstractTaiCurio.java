@@ -1,6 +1,8 @@
 package org.taichi.curios;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.taichi.attachments.EntityCurioEffectAttachment;
 import org.taichi.init.TaiAttachments;
@@ -8,18 +10,20 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class AbstractTaiCurio implements ICurio {
 
-    public record EffectFactory<T extends TaiCurioEffectContext>(TaiCurioEffectType<T> effect, Consumer<T> consumer) {
+    public record EffectEntry<T extends TaiCurioEffectContext>(TaiCurioEffectType<T> effect,
+                                                               TaiCurioEffectModifier<T> modifier) {
+        public Component getTooltip() {
+            return effect.getEffectTooltip(modifier);
+        }
     }
 
     private final ItemStack stack;
-    private final List<EffectFactory<?>> effects;
+    private final List<EffectEntry<?>> effects;
 
-    public AbstractTaiCurio(ItemStack stack, List<EffectFactory<?>> effects) {
+    public AbstractTaiCurio(ItemStack stack, List<EffectEntry<?>> effects) {
         this.stack = stack;
         this.effects = effects;
     }
@@ -30,16 +34,19 @@ public class AbstractTaiCurio implements ICurio {
         return stack;
     }
 
+    private <T extends TaiCurioEffectContext> void addEffectToEntity(EntityCurioEffectAttachment data, EffectEntry<T> entry, SlotContext slotContext, ItemStack prevStack) {
+        data.addEffect(entry.effect(), slotContext, stack, entry.modifier());
+    }
+
     @Override
-    @SuppressWarnings("unchecked")
     public void onEquip(SlotContext slotContext, ItemStack prevStack) {
 
         if (!(slotContext.entity() instanceof ServerPlayer player)) {
             return;
         }
         EntityCurioEffectAttachment data = player.getData(TaiAttachments.ENTITY_EFFECT);
-        for (EffectFactory effect : effects) {
-            data.addEffect(effect.effect(), slotContext, stack, effect.consumer());
+        for (EffectEntry<?> effect : effects) {
+            addEffectToEntity(data, effect, slotContext, prevStack);
         }
     }
 
@@ -49,8 +56,14 @@ public class AbstractTaiCurio implements ICurio {
             return;
         }
         EntityCurioEffectAttachment data = player.getData(TaiAttachments.ENTITY_EFFECT);
-        for (EffectFactory<?> effect : effects) {
+        for (EffectEntry<?> effect : effects) {
             data.removeEffect(effect.effect(), slotContext, stack);
         }
+    }
+
+    @Override
+    public List<Component> getAttributesTooltip(List<Component> tooltips, Item.TooltipContext context) {
+        tooltips.addAll(effects.stream().map(EffectEntry::getTooltip).toList());
+        return tooltips;
     }
 }

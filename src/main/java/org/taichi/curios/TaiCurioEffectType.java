@@ -1,26 +1,18 @@
 package org.taichi.curios;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.util.Lazy;
+import org.taichi.init.TaiCurioEffects;
 import top.theillusivec4.curios.api.SlotContext;
 
-import java.util.stream.Stream;
+import java.util.Objects;
 
 public abstract class TaiCurioEffectType<T extends TaiCurioEffectContext> {
     private final boolean persist;
     private final boolean unique;
-
-
-    public enum CodecType {
-        Sync,
-        Persist,
-        SyncSelf,
-    }
 
     public TaiCurioEffectType(boolean persist, boolean unique) {
         this.persist = persist;
@@ -33,7 +25,6 @@ public abstract class TaiCurioEffectType<T extends TaiCurioEffectContext> {
         return persist;
     }
 
-
     public boolean unique() {
         return unique;
     }
@@ -45,9 +36,22 @@ public abstract class TaiCurioEffectType<T extends TaiCurioEffectContext> {
     public void effectRemoved(LivingEntity entity, ItemStack stack, T context) {
     }
 
+    private final Lazy<String> translationKey = Lazy.of(() -> {
+        ResourceLocation location = TaiCurioEffects.REGISTRY_CURIOS_EFFECT.getKey(this);
+        Objects.requireNonNull(location);
+        return location.getNamespace() + ".curio_effects." + location.getPath();
+    });
 
-    @FunctionalInterface
-    public interface CurioEffectSupplier<T extends TaiCurioEffectContext> {
-        T create(ItemStack stack, SlotContext curioContext);
+    public String getTranslationKey() {
+        return translationKey.get();
     }
+
+
+    public Component getEffectTooltip(TaiCurioEffectModifier<T> modifier) {
+        if (modifier == null) {
+            return Component.translatable(translationKey.get());
+        }
+        return Component.translatable(translationKey.get(), modifier.getDesc());
+    }
+
 }

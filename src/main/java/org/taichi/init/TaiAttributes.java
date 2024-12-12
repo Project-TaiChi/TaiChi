@@ -20,7 +20,7 @@ public class TaiAttributes {
         ATTRIBUTES.register(modbus);
     }
 
-    private static String attributeId(String id) {
+    public static String attributeId(String id) {
         return TaiChiMod.MOD_ID + ".attribute.name." + id;
     }
 

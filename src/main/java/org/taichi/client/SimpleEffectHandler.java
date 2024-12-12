@@ -14,6 +14,7 @@ public class SimpleEffectHandler {
     private static boolean hasMoonNightVersion = false;
     private static boolean hasDoubleJump = false;
 
+    private static final HashSet<SimpleEffect> effects = new HashSet<>();
 
     public static boolean hasMoonNightVersion() {
         return hasMoonNightVersion;
@@ -24,6 +25,11 @@ public class SimpleEffectHandler {
     }
 
     public static void handle(SimpleEffect effect, boolean isAdd) {
+        if (isAdd) {
+            effects.add(effect);
+        } else {
+            effects.remove(effect);
+        }
 
         if (effect == TaiCurioEffects.MOON_LIGHT_VISION.get()) {
             hasMoonNightVersion = isAdd;
@@ -36,6 +42,11 @@ public class SimpleEffectHandler {
     public static void onClientDisconnected(ClientPlayerNetworkEvent.LoggingOut event) {
         hasDoubleJump = false;
         hasMoonNightVersion = false;
+        effects.clear();
+    }
+
+    public static boolean hasEffect(SimpleEffect effect) {
+        return effects.contains(effect);
     }
 
 }
