@@ -12,28 +12,30 @@ import java.util.HashSet;
 public class SimpleEffectHandler {
 
     private static boolean hasMoonNightVersion = false;
+    private static boolean hasDoubleJump = false;
 
-    private static final HashSet<SimpleEffect> effects = new HashSet<>();
 
     public static boolean hasMoonNightVersion() {
         return hasMoonNightVersion;
     }
 
-    public static void handle(SimpleEffect effect, boolean isAdd) {
-        if(isAdd) {
-            effects.add(effect);
-        } else {
-            effects.remove(effect);
-        }
+    public static boolean hasDoubleJump() {
+        return hasDoubleJump;
+    }
 
-        if(effect == TaiCurioEffects.MOON_LIGHT_VISION.get()) {
+    public static void handle(SimpleEffect effect, boolean isAdd) {
+
+        if (effect == TaiCurioEffects.MOON_LIGHT_VISION.get()) {
             hasMoonNightVersion = isAdd;
+        } else if (effect == TaiCurioEffects.DOUBLE_JUMP.get()) {
+            hasDoubleJump = isAdd;
         }
     }
 
     @SubscribeEvent
-    public static void onClientConnected(ClientPlayerNetworkEvent.LoggingOut event) {
+    public static void onClientDisconnected(ClientPlayerNetworkEvent.LoggingOut event) {
+        hasDoubleJump = false;
         hasMoonNightVersion = false;
-        effects.clear();
     }
+
 }
