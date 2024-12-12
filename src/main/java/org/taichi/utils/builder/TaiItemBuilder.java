@@ -6,19 +6,13 @@ import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.taichi.data.provider.ItemDataContext;
-import org.taichi.init.TaiCapabilities;
-import org.taichi.init.TaiCreativeTabs;
-import org.taichi.init.TaiItems;
-import org.taichi.init.TaiTab;
+import org.taichi.init.*;
 import org.taichi.item.TaiBaseItem;
-import top.theillusivec4.curios.api.CurioAttributeModifiers;
-import top.theillusivec4.curios.common.CuriosRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class TaiItemBuilder<T extends Item> {
     private final String name;
@@ -30,10 +24,7 @@ public class TaiItemBuilder<T extends Item> {
     private TaiCurioBuilder curioBuilder = null;
     private final List<TagKey<Item>> tags = new ArrayList<>();
 
-    record TaiCurioAttributeModifiersBuilderEntry(String slot, Consumer<TaiCurioAttributeModifiersBuilder> attributes) {
-    }
-
-    private final List<TaiCurioAttributeModifiersBuilderEntry> modifiersBuilderEntries = new ArrayList<>();
+    private final List<Consumer<TaiCurioAttributeModifiersBuilder>> modifiersBuilders = new ArrayList<>();
 
     private final Lazy<Boolean> skipDataGens = Lazy.of(() -> !DatagenModLoader.isRunningDataGen());
 
@@ -59,8 +50,8 @@ public class TaiItemBuilder<T extends Item> {
         return this;
     }
 
-    public TaiItemBuilder<T> attributes(String slot, Consumer<TaiCurioAttributeModifiersBuilder> attributes) {
-        modifiersBuilderEntries.add(new TaiCurioAttributeModifiersBuilderEntry(slot, attributes));
+    public TaiItemBuilder<T> attributes(Consumer<TaiCurioAttributeModifiersBuilder> attributes) {
+        modifiersBuilders.add(attributes);
         return this;
     }
 
@@ -105,13 +96,11 @@ public class TaiItemBuilder<T extends Item> {
 
     private Item.Properties makeProperties() {
         Item.Properties properties = new Item.Properties();
-        CurioAttributeModifiers.Builder curioAttributes = CurioAttributeModifiers.builder();
-        for (TaiCurioAttributeModifiersBuilderEntry entry : modifiersBuilderEntries) {
-            TaiCurioAttributeModifiersBuilder wrapper = new TaiCurioAttributeModifiersBuilder(name, curioAttributes, entry.slot);
-            entry.attributes.accept(wrapper);
-            wrapper.build();
+        TaiCurioAttributeModifiersBuilder builder = new TaiCurioAttributeModifiersBuilder(name);
+        for (Consumer<TaiCurioAttributeModifiersBuilder> consumer : modifiersBuilders) {
+            consumer.accept(builder);
         }
-        properties.component(CuriosRegistry.CURIO_ATTRIBUTE_MODIFIERS, curioAttributes.build());
+        properties.component(TaiDataComponents.TAI_CURIO_ATTRIBUTE_MODIFIERS, builder.build());
         if (propertiesConsumer != null) {
             propertiesConsumer.accept(properties);
         }

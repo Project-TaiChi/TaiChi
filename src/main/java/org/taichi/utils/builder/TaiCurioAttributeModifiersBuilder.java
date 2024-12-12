@@ -1,26 +1,43 @@
 package org.taichi.utils.builder;
 
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import org.taichi.TaiChiMod;
+import org.taichi.component.TaiCurioAttributeModifiers;
+import top.theillusivec4.curios.CuriosConstants;
 import top.theillusivec4.curios.api.CurioAttributeModifiers;
+import top.theillusivec4.curios.api.SlotAttribute;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaiCurioAttributeModifiersBuilder {
     private final String namePrefix;
-    private final CurioAttributeModifiers.Builder builder;
-    private final String slot;
+    private List<TaiCurioAttributeModifiers.Entry> entries;
 
 
-    public TaiCurioAttributeModifiersBuilder(String namePrefix, CurioAttributeModifiers.Builder builder, String slot) {
+    public TaiCurioAttributeModifiersBuilder(String namePrefix) {
         this.namePrefix = namePrefix;
-        this.builder = builder;
-        this.slot = slot;
+        this.entries = new ArrayList<>();
     }
 
     private void add(Holder<Attribute> attributeHolder, String name, double value, AttributeModifier.Operation operation) {
-        builder.add(attributeHolder, new AttributeModifier(TaiChiMod.loc(namePrefix + "." + name), value, operation), slot);
+//        builder.add(attributeHolder, new AttributeModifier(TaiChiMod.loc(namePrefix + "." + name), value, operation));
+        AttributeModifier attributeModifier = new AttributeModifier(TaiChiMod.loc(namePrefix + "." + name), value, operation);
+
+        ResourceLocation rl;
+
+        if (attributeHolder.value() instanceof SlotAttribute wrapper) {
+            rl = ResourceLocation.fromNamespaceAndPath(CuriosConstants.MOD_ID, wrapper.getIdentifier());
+        } else {
+            rl = ResourceLocation.parse(attributeHolder.getRegisteredName());
+        }
+        this.entries.add(new TaiCurioAttributeModifiers.Entry(rl, attributeModifier));
     }
+
+
 
 
     public TaiCurioAttributeModifiersBuilder add(Holder<Attribute> attributeHolder, String name, double value) {
@@ -38,8 +55,7 @@ public class TaiCurioAttributeModifiersBuilder {
         return this;
     }
 
-    public CurioAttributeModifiers build() {
-        return builder.build();
+    public TaiCurioAttributeModifiers build() {
+        return new TaiCurioAttributeModifiers(entries);
     }
-
 }

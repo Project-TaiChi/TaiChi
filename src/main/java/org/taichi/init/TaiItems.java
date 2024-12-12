@@ -1,6 +1,7 @@
 package org.taichi.init;
 
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -23,7 +24,7 @@ public final class TaiItems {
                     .withEffect(TaiCurioEffects.CURING_ON_DYING))
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Curios)
-            .attributes("curio", builder -> builder
+            .attributes(builder -> builder
                     .add(Attributes.LUCK, "luck", 1.0))
             .register();
 
@@ -38,7 +39,7 @@ public final class TaiItems {
 
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
-            .attributes("curio", builder -> builder
+            .attributes(builder -> builder
                     .multiply(Attributes.MAX_HEALTH, "max_health", 0.05)
                     .multiply(Attributes.GRAVITY, "gravity", -0.2))
             .register();
@@ -48,7 +49,7 @@ public final class TaiItems {
             .tag(TaiTags.CuriosTags.CURIO)
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
-            .attributes("curio", builder -> builder
+            .attributes(builder -> builder
                     .add(TaiAttributes.MAGIC_ATTACK_DAMAGE_RATIO, "max_health", 0.15))
             .register();
 
@@ -59,7 +60,7 @@ public final class TaiItems {
                     .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, EffectModifiers.damageType().type(DamageTypes.FREEZE).translationName("freeze")))
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
-            .attributes("curio", builder -> builder
+            .attributes(builder -> builder
                     .multiply(Attributes.MOVEMENT_SPEED, "max_health", 0.1)
                     .add(Attributes.LUCK, "luck", 1.0))
             .register();
@@ -73,7 +74,7 @@ public final class TaiItems {
                     .withEffect(TaiCurioEffects.MUTE_SOUND))
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
-            .attributes("curio", builder -> builder
+            .attributes(builder -> builder
                     .add(Attributes.ARMOR_TOUGHNESS, "armor_toughness", 6.0))
             .register();
 
@@ -86,9 +87,39 @@ public final class TaiItems {
                     .withEffect(TaiCurioEffects.DOUBLE_JUMP))
             .properties(properties -> properties.stacksTo(1))
             .tab(TaiTab.Ingredients)
-            .attributes("curio", builder -> builder
+            .attributes(builder -> builder
                     // movement speed has ratio of 1000, so 0.01 is 10%
                     .add(Attributes.MOVEMENT_SPEED, "movement_speed", 0.01))
+            .register();
+
+    //勇士赫勋 [吊坠]
+    public static final DeferredItem<TaiBaseItem> WARRIOR_MEDAL = TaiItemBuilder.create("warrior_medal")
+            .textChinese("勇士赫勋")
+            .tag(TaiTags.CuriosTags.CHARM)
+            .curio(builder -> builder
+                    .withMobEffect(MobEffects.HERO_OF_THE_VILLAGE, 2))
+            .properties(properties -> properties.stacksTo(1))
+            .tab(TaiTab.Curios)
+            .attributes(builder -> builder
+                    .multiply(Attributes.MAX_HEALTH, "luck", 0.1)
+                    .add(Attributes.ATTACK_DAMAGE, "attack_damage", 1.0)
+                    .add(TaiAttributes.HOLY_ATTACK_DAMAGE, "holy_damage", 1.0))
+            .register();
+
+    // 星彩手镯 [戒指]
+    public static final DeferredItem<TaiBaseItem> STAR_BRACELET = TaiItemBuilder.create("star_bracelet")
+            .textChinese("星彩手镯")
+            .tag(TaiTags.CuriosTags.RING)
+            .curio(builder -> builder
+                    .withEffect(TaiCurioEffects.DAMAGE_IMMUNE, EffectModifiers.damageType()
+                            .tag(TaiTags.DamageTypes.IS_STAR_BRACELET_IMMUNE)
+                            .translationName("star_bracelet_immune"))
+                    .withEffect(TaiCurioEffects.CURING_ON_DYING))
+            .properties(properties -> properties.stacksTo(1))
+            .tab(TaiTab.Curios)
+            .attributes(builder -> builder
+                    .add(TaiAttributes.HEALING_AMPLIFIER, "health_amplifier", 0.25)
+                    .add(TaiAttributes.POTION_DURATION_RATIO, "potion_duration", 0.1))
             .register();
 
     public static void init(IEventBus modbus) {

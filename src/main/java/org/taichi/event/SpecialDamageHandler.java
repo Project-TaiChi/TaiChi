@@ -28,7 +28,17 @@ public class SpecialDamageHandler {
             if (magicInc != null) {
                 event.setAmount((float) (event.getAmount() * magicInc.getValue()));
             }
+
+            AttributeInstance holyDamage = player.getAttribute(TaiAttributes.HOLY_ATTACK_DAMAGE);
+            if (holyDamage != null && holyDamage.getValue() > 0) {
+                handleHolyDamage(player, event, holyDamage.getBaseValue());
+            }
         }
 
+    }
+
+    private static void handleHolyDamage(Player player, LivingIncomingDamageEvent event, double baseHolyDamage) {
+        // TODO: 添加基于修正值的神圣伤害加成
+        event.setAmount((float) (event.getAmount() + baseHolyDamage));
     }
 }

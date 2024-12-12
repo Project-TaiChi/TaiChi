@@ -15,7 +15,9 @@ public class ChineseLanguageProvider extends LanguageProvider {
     public ChineseLanguageProvider(PackOutput output) {
         super(output, TaiChiMod.MOD_ID, "zh_cn");
     }
-
+    private String id(String name) {
+        return TaiChiMod.MOD_ID + "." + name;
+    }
 
     @Override
     protected void addTranslations() {
@@ -26,12 +28,16 @@ public class ChineseLanguageProvider extends LanguageProvider {
         }
 
         addAttribute(TaiAttributes.MAGIC_ATTACK_DAMAGE_RATIO, "魔法伤害");
+        addAttribute(TaiAttributes.HOLY_ATTACK_DAMAGE, "神圣伤害");
+        addAttribute(TaiAttributes.HEALING_AMPLIFIER, "再生速度");
+        addAttribute(TaiAttributes.POTION_DURATION_RATIO, "药水持续时间");
 
 
         addCurioEffectModifier("lighting", "雷击伤害");
         addCurioEffectModifier("freeze", "冻结伤害");
         addCurioEffectModifier("fall", "摔落伤害");
         addCurioEffectModifier("fall_and_vector", "摔落、矢量伤害");
+        addCurioEffectModifier("star_bracelet_immune", "窒息、灼烧、坠落伤害");
 
         addCurioEffectType(TaiCurioEffects.ATTACKER_REACTION, "在夜晚高亮周围对你拥有敌意的生物");
         addCurioEffectType(TaiCurioEffects.MOON_LIGHT_VISION, "在夜晚拥有更好的视野");
@@ -40,6 +46,8 @@ public class ChineseLanguageProvider extends LanguageProvider {
         addCurioEffectType(TaiCurioEffects.BREAK_ON_DAMAGE, "在受到%s时碎裂");
         addCurioEffectType(TaiCurioEffects.DOUBLE_JUMP, "为佩戴者提供二段跳效果");
         addCurioEffectType(TaiCurioEffects.MUTE_SOUND, "完全吸收佩戴者造成的所有声音");
+
+        add(id("tooltip.curio.effect"), "为佩戴者提供%s效果");
 
     }
 

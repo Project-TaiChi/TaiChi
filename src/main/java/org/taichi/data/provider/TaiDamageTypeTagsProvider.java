@@ -3,6 +3,7 @@ package org.taichi.data.provider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -19,9 +20,13 @@ public class TaiDamageTypeTagsProvider extends DamageTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(TaiTags.DamageTypes.IS_VECTOR)
-                .add(DamageTypes.FALL)
-                .add(DamageTypes.FLY_INTO_WALL)
-                .add(DamageTypes.FALLING_ANVIL)
-                .add(DamageTypes.FALLING_STALACTITE);
+                .addTag(DamageTypeTags.IS_FALL)
+                .add(DamageTypes.FLY_INTO_WALL);
+
+        this.tag(TaiTags.DamageTypes.IS_STAR_BRACELET_IMMUNE)
+                .addTag(DamageTypeTags.IS_FIRE)
+                .addTag(DamageTypeTags.IS_DROWNING)
+                .add(DamageTypes.IN_WALL)
+                .addTag(DamageTypeTags.IS_FALL);
     }
 }

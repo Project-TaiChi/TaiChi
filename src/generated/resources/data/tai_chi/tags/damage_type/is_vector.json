@@ -1,8 +1,6 @@
 {
   "values": [
-    "minecraft:fall",
-    "minecraft:fly_into_wall",
-    "minecraft:falling_anvil",
-    "minecraft:falling_stalactite"
+    "#minecraft:is_fall",
+    "minecraft:fly_into_wall"
   ]
 }

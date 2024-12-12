@@ -1,5 +1,7 @@
 package org.taichi.utils.builder;
 
+import net.minecraft.core.Holder;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.util.Lazy;
 import org.taichi.curios.AbstractTaiCurio;
@@ -18,10 +20,12 @@ public class TaiCurioBuilder {
 
 
     private final List<Lazy<AbstractTaiCurio.EffectEntry<?>>> effects;
+    private final List<AbstractTaiCurio.MobEffectEntry> mobEffects;
 
 
     public TaiCurioBuilder() {
         effects = new ArrayList<>();
+        mobEffects = new ArrayList<>();
     }
 
 
@@ -35,9 +39,13 @@ public class TaiCurioBuilder {
         return this;
     }
 
+    public TaiCurioBuilder withMobEffect(Holder<MobEffect> effect, int amplifier) {
+        this.mobEffects.add(new AbstractTaiCurio.MobEffectEntry(effect, amplifier));
+        return this;
+    }
 
     Function<ItemStack, ICurio> build() {
         Lazy<List<AbstractTaiCurio.EffectEntry<?>>> lazyEffects = Lazy.of(() -> effects.stream().map(Lazy::get).collect(Collectors.toList()));
-        return stack -> new AbstractTaiCurio(stack, lazyEffects.get());
+        return stack -> new AbstractTaiCurio(stack, lazyEffects.get(), mobEffects);
     }
 }

@@ -28,5 +28,6 @@ public class TaiTags {
 
     public static class DamageTypes {
         public static final TagKey<DamageType> IS_VECTOR = TagKey.create(Registries.DAMAGE_TYPE, TaiChiMod.loc("is_vector"));
+        public static final TagKey<DamageType> IS_STAR_BRACELET_IMMUNE = TagKey.create(Registries.DAMAGE_TYPE, TaiChiMod.loc("is_star_bracelet_immune"));
     }
 }
